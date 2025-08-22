@@ -12,9 +12,12 @@ from tempfile import TemporaryFile
 from warnings import warn
 
 try:
-    import audioop
-except ImportError:
-    pass
+    import audioop as _audioop  # Py3.13: module may be missing
+except Exception:
+    _audioop = None
+
+# Re-export: from pydub.utils import audioop
+audioop = _audioop
 
 if sys.version_info >= (3, 0):
     basestring = str
